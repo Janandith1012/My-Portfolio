@@ -1,14 +1,16 @@
 :root {
-  --bg: #0b1412;
-  --bg-elevated: #12201c;
-  --bg-soft: #163028;
-  --ink: #e8f0ec;
-  --ink-muted: #9bb0a6;
-  --accent: #3d9b7a;
-  --accent-strong: #2f7f63;
-  --accent-glow: rgba(61, 155, 122, 0.28);
-  --line: rgba(232, 240, 236, 0.12);
-  --danger: #d97b6c;
+  --bg: #000000;
+  --bg-elevated: #00524d;
+  --bg-soft: #48a89a;
+  --ink: #cbeefb;
+  --ink-muted: #48a89a;
+  --accent: #48a89a;
+  --accent-strong: #00524d;
+  --accent-glow: rgba(72, 168, 154, 0.28);
+  --gold: #cbeefb;
+  --gold-soft: rgba(203, 238, 251, 0.2);
+  --line: rgba(203, 238, 251, 0.16);
+  --danger: #cbeefb;
   --font-display: 'Bodoni Moda', Georgia, serif;
   --font-body: 'Manrope', sans-serif;
   --radius: 4px;
@@ -34,8 +36,8 @@ body {
   line-height: 1.6;
   color: var(--ink);
   background:
-    radial-gradient(1200px 600px at 80% -10%, rgba(61, 155, 122, 0.16), transparent 55%),
-    radial-gradient(900px 500px at 10% 20%, rgba(34, 80, 68, 0.35), transparent 50%),
+    radial-gradient(1200px 600px at 80% -10%, rgba(72, 168, 154, 0.22), transparent 55%),
+    radial-gradient(900px 500px at 10% 20%, rgba(0, 82, 77, 0.5), transparent 50%),
     var(--bg);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -66,6 +68,6 @@ button {
 }
 
 ::selection {
-  background: rgba(61, 155, 122, 0.35);
+  background: rgba(72, 168, 154, 0.4);
   color: var(--ink);
 }

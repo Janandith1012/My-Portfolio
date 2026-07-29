@@ -2,19 +2,85 @@ import { motion } from 'framer-motion'
 import CvManager from './CvManager'
 import ProfilePhoto from './ProfilePhoto'
 
+const particles = [
+  ['5%', '3px', '-4s', '22s', '16px'],
+  ['13%', '5px', '-16s', '28s', '-12px'],
+  ['22%', '2px', '-9s', '20s', '10px'],
+  ['31%', '4px', '-21s', '27s', '-20px'],
+  ['40%', '3px', '-2s', '24s', '14px'],
+  ['49%', '5px', '-14s', '26s', '-10px'],
+  ['58%', '2px', '-7s', '19s', '20px'],
+  ['67%', '4px', '-19s', '29s', '-16px'],
+  ['76%', '3px', '-11s', '23s', '12px'],
+  ['84%', '5px', '-25s', '30s', '-18px'],
+  ['91%', '2px', '-5s', '21s', '14px'],
+  ['97%', '4px', '-17s', '26s', '-10px'],
+]
+
 export default function Hero({
   profilePhoto,
-  onProfilePhotoChange,
   cv,
   uploadCv,
   renameCv,
   removeCv,
 }) {
+  function moveBackground(event) {
+    const hero = event.currentTarget
+    const bounds = hero.getBoundingClientRect()
+    const x = event.clientX - bounds.left
+    const y = event.clientY - bounds.top
+    const shiftX = ((x / bounds.width) - 0.5) * 22
+    const shiftY = ((y / bounds.height) - 0.5) * 22
+
+    hero.style.setProperty('--parallax-x', `${shiftX}px`)
+    hero.style.setProperty('--parallax-y', `${shiftY}px`)
+    hero.style.setProperty('--parallax-reverse-x', `${-shiftX * 0.55}px`)
+    hero.style.setProperty('--parallax-reverse-y', `${-shiftY * 0.55}px`)
+  }
+
+  function resetBackground(event) {
+    const hero = event.currentTarget
+    hero.style.setProperty('--parallax-x', '0px')
+    hero.style.setProperty('--parallax-y', '0px')
+    hero.style.setProperty('--parallax-reverse-x', '0px')
+    hero.style.setProperty('--parallax-reverse-y', '0px')
+  }
+
   return (
-    <section className="hero" id="top" aria-labelledby="hero-brand">
+    <section
+      className="hero"
+      id="top"
+      aria-labelledby="hero-brand"
+      onPointerMove={moveBackground}
+      onPointerLeave={resetBackground}
+    >
       <div className="hero-atmosphere" aria-hidden="true">
         <div className="hero-grid" />
         <div className="hero-noise" />
+        <div className="hero-particles">
+          {particles.map(([left, size, delay, duration, drift], index) => (
+            <span
+              key={`${left}-${delay}`}
+              className={index % 3 === 0 ? 'particle particle-gold' : 'particle'}
+              style={{
+                '--particle-left': left,
+                '--particle-size': size,
+                '--particle-delay': delay,
+                '--particle-duration': duration,
+                '--particle-drift': drift,
+              }}
+            />
+          ))}
+        </div>
+        <div className="hero-data-stream">
+          <span>BUSINESS ANALYSIS</span>
+          <i>◆</i>
+          <span>INFORMATION SYSTEMS</span>
+          <i>◆</i>
+          <span>AGILE DELIVERY</span>
+          <i>◆</i>
+          <span>TECHNOLOGY SOLUTIONS</span>
+        </div>
         <div className="hero-orb hero-orb-a" />
         <div className="hero-orb hero-orb-b" />
         <div className="hero-rings">
@@ -170,13 +236,13 @@ export default function Hero({
           </motion.div>
         </div>
         <div className="hero-profile-column">
+          <ProfilePhoto photo={profilePhoto} />
           <CvManager
             cv={cv}
             uploadCv={uploadCv}
             renameCv={renameCv}
             removeCv={removeCv}
           />
-          <ProfilePhoto photo={profilePhoto} onChange={onProfilePhotoChange} />
         </div>
       </div>
     </section>

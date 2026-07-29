@@ -65,6 +65,12 @@ export default function Projects({ projects, addProject, removeProject }) {
                 <span className="project-number">
                   {String(index + 1).padStart(2, '0')}
                 </span>
+                <div className="project-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none">
+                    <rect x="3" y="4" width="18" height="16" rx="2" />
+                    <path d="M3 9h18M7 6.5h.01M10 6.5h.01M8 14l3-2v4l-3-2ZM14 13h4M14 16h3" />
+                  </svg>
+                </div>
                 <h3>{project.title}</h3>
                 <p>{project.description}</p>
                 {project.technologies.length ? (

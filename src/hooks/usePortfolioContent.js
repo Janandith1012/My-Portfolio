@@ -13,7 +13,7 @@ function readValue(key, fallback) {
 }
 
 export function usePortfolioContent() {
-  const [profilePhoto, setProfilePhoto] = useState(() =>
+  const [profilePhoto] = useState(() =>
     readValue(PROFILE_KEY, ''),
   )
   const [projects, setProjects] = useState(() => readValue(PROJECTS_KEY, []))
@@ -43,7 +43,6 @@ export function usePortfolioContent() {
 
   return {
     profilePhoto,
-    setProfilePhoto,
     projects,
     addProject,
     removeProject,

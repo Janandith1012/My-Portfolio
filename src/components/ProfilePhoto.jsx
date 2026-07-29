@@ -1,44 +1,26 @@
 import { motion } from 'framer-motion'
-import { useRef, useState } from 'react'
 
-function fileToDataUrl(file) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader()
-    reader.onload = () => resolve(reader.result)
-    reader.onerror = reject
-    reader.readAsDataURL(file)
-  })
-}
+export default function ProfilePhoto({ photo }) {
+  function moveGlow(event) {
+    const element = event.currentTarget
+    const bounds = element.getBoundingClientRect()
+    const x = ((event.clientX - bounds.left) / bounds.width - 0.5) * 44
+    const y = ((event.clientY - bounds.top) / bounds.height - 0.5) * 38
 
-export default function ProfilePhoto({ photo, onChange }) {
-  const inputRef = useRef(null)
-  const [error, setError] = useState('')
+    element.style.setProperty('--profile-glow-x', `${x}px`)
+    element.style.setProperty('--profile-glow-y', `${y}px`)
+  }
 
-  async function handleFile(event) {
-    const file = event.target.files?.[0]
-    if (!file) return
-
-    if (!file.type.startsWith('image/')) {
-      setError('Please choose an image file.')
-      return
-    }
-
-    if (file.size > 3 * 1024 * 1024) {
-      setError('Please choose an image under 3MB.')
-      return
-    }
-
-    try {
-      onChange(await fileToDataUrl(file))
-      setError('')
-    } catch {
-      setError('The image could not be loaded.')
-    }
+  function resetGlow(event) {
+    event.currentTarget.style.setProperty('--profile-glow-x', '0px')
+    event.currentTarget.style.setProperty('--profile-glow-y', '0px')
   }
 
   return (
     <motion.aside
       className="profile-photo-wrap"
+      onPointerMove={moveGlow}
+      onPointerLeave={resetGlow}
       initial={{ opacity: 0, scale: 0.94, x: 24 }}
       animate={{ opacity: 1, scale: 1, x: 0 }}
       transition={{ delay: 0.45, duration: 0.8 }}
@@ -51,23 +33,7 @@ export default function ProfilePhoto({ photo, onChange }) {
             <span>HJ</span>
           </div>
         )}
-        <button
-          type="button"
-          className="profile-edit"
-          onClick={() => inputRef.current?.click()}
-          aria-label={photo ? 'Change profile photo' : 'Add profile photo'}
-        >
-          {photo ? 'Change' : 'Add photo'}
-        </button>
       </div>
-      <input
-        ref={inputRef}
-        className="visually-hidden"
-        type="file"
-        accept="image/*"
-        onChange={handleFile}
-      />
-      {error ? <p className="profile-error">{error}</p> : null}
     </motion.aside>
   )
 }

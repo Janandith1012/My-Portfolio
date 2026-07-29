@@ -17,7 +17,6 @@ function App() {
   const { cv, uploadCv, renameCv, removeCv } = useCvDocument()
   const {
     profilePhoto,
-    setProfilePhoto,
     projects,
     addProject,
     removeProject,
@@ -29,7 +28,6 @@ function App() {
       <main>
         <Hero
           profilePhoto={profilePhoto}
-          onProfilePhotoChange={setProfilePhoto}
           cv={cv}
           uploadCv={uploadCv}
           renameCv={renameCv}
